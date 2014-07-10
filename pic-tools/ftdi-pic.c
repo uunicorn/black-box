@@ -79,9 +79,9 @@ void
 pgc(int on)
 {
     if(on)
-	data |= 4;
+        data |= 4;
     else
-	data &= ~4;
+        data &= ~4;
 
     out();
     //usleep(100);
@@ -91,9 +91,9 @@ void
 pgd(int on)
 {
     if(on)
-	data |= 1;
+        data |= 1;
     else
-	data &= ~1;
+        data &= ~1;
 
     out();
 }
@@ -119,7 +119,7 @@ delay(unsigned long t)
     gettimeofday(&now, NULL);
     timeradd(&now, &then, &then);
     do {
-	gettimeofday(&now, NULL);
+        gettimeofday(&now, NULL);
     } while(timercmp(&now, &then, <));
 }
 
@@ -130,9 +130,9 @@ cmd(unsigned char d)
     int x;
 
     for(x=0; x < 6;x++, d >>= 1) {
-	pgd((d & 1) != 0);
-	pgc(1);
-	pgc(0);
+        pgd((d & 1) != 0);
+        pgc(1);
+        pgc(0);
     }
     pgd(1);
     delay(1);
@@ -147,10 +147,10 @@ outd(unsigned int d)
     d &= 0x7ffe;
 
     for(x=0; x < 16; x++, d >>= 1) {
-	pgd((d & 1) != 0);
-	pgc(1);
-	pgc(0);
-	
+        pgd((d & 1) != 0);
+        pgc(1);
+        pgc(0);
+        
     }
     pgd(1);
     delay(1);
@@ -165,18 +165,18 @@ ind()
     
     pgd(0);
     for(x=0; x < 16; x++) {
-	pgc(1);
-	pgc(0);
+        pgc(1);
+        pgc(0);
  
-	rc >>= 1;
+        rc >>= 1;
 
-	if(pgdin( ))
-	    rc |= 0x8000;
+        if(pgdin( ))
+            rc |= 0x8000;
     }
     
     if((rc & 0x8001) != 0) {
-	fprintf(stderr, "assertion failed for start/stop bit: %04x\n", rc);
-	exit(1);
+        fprintf(stderr, "assertion failed for start/stop bit: %04x\n", rc);
+        exit(1);
     }
     
     delay(1);

@@ -42,7 +42,7 @@ main()
         } while(1);
         
         // next address
-	cmd(PIC_CMD_INC_ADDR);
+        cmd(PIC_CMD_INC_ADDR);
 
         fputc('.', stderr);
         fflush(stderr);

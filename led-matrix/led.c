@@ -9,19 +9,19 @@ typedef unsigned short uint16_t;
 #define clrwdt __asm clrwdt __endasm
 
 #ifndef KHZ
-#define KHZ	4000
+#define KHZ     4000
 #endif
 
-#define	BAUD	9600
-#define BAUD_HI	1
+#define BAUD    9600
+#define BAUD_HI 1
 
-#if	(BAUD_HI == 1)
-#define	BAUD_FACTOR	(16L*BAUD)
+#if (BAUD_HI == 1)
+#define BAUD_FACTOR  (16L*BAUD)
 #else
-#define	BAUD_FACTOR	(64L*BAUD)
+#define BAUD_FACTOR  (64L*BAUD)
 #endif
 
-#define SPBRG_VALUE	(unsigned char)(((KHZ*1000L)-BAUD_FACTOR)/BAUD_FACTOR)
+#define SPBRG_VALUE  (unsigned char)(((KHZ*1000L)-BAUD_FACTOR)/BAUD_FACTOR)
 
 uint8_t segs[4];
 uint8_t buf[4];
@@ -33,16 +33,16 @@ set_segment(uint8_t b)
     uint8_t flush = 0;
 
     if(b & 0x80) {
-	flush = 1;
-	b &= 0x7f;
+        flush = 1;
+        b &= 0x7f;
     }
 
     m = 0xf;
     v = b & m;
 
     if(b & 0x40) {
-	v <<= 4;
-	m <<= 4;
+        v <<= 4;
+        m <<= 4;
         b &= 0x3f;
     }
 
@@ -51,8 +51,8 @@ set_segment(uint8_t b)
     buf[b] = (buf[b] & ~m) | v;
     
     if(flush)
-	for(b=0;b<4;b++)
-    	    segs[b] = buf[b];
+        for(b=0;b<4;b++)
+            segs[b] = buf[b];
 }
 
 static void 
@@ -93,8 +93,8 @@ void main()
     PORTB = 0x4;  // TX
     TRISB = 0x12; // RX + PGM
 
-    SPBRG = SPBRG_VALUE;	// Baud Rate register, calculated by macro
-    SYNC = 0;			// Disable Synchronous/Enable Asynchronous
+    SPBRG = SPBRG_VALUE;        // Baud Rate register, calculated by macro
+    SYNC = 0;                        // Disable Synchronous/Enable Asynchronous
     BRGH = BAUD_HI;
 
     RX9 = 0;
@@ -126,7 +126,7 @@ void main()
             PORTB |= bits[i];
             delay(0x100);
             PORTB &= ~bits[i];
-	}
+        }
         GIE = 1;
         clrwdt;
     }
