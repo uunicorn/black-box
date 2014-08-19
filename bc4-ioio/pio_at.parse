@@ -1,0 +1,8 @@
+prefix pio_at_
+
+{ AT + DIR ? \r } : pio_handle_dir_get
+{ AT + DIR = %d:bits \r } : pio_handle_dir_set
+{ AT + PIN ? \r } : pio_handle_pin_get
+{ AT + PIN = %d:bits \r } : pio_handle_pin_set
+{ AT + DEBOUNCE = %d:bits \r } : pio_handle_debounce_set
+

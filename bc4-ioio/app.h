@@ -1,0 +1,17 @@
+
+#define APP_INQUIRE_TIMEOUT_IND 	0
+#define APP_DELETE_ALL_AUTH_IND		1
+#define APP_LED_IND             	2
+#define APP_REENABLE_IND        	3
+#define APP_SIO_STATE_CHANGED_IND	4
+#define APP_PIO_STATE_CHANGED_IND	5
+#define APP_DISCOVERABLE_PRESSED	6
+#define APP_DISCOVERABLE_RELEASED	7
+
+typedef enum {
+    APP_INITIALIZING,
+    APP_IDLE,
+    APP_CONNECTING,
+    APP_CONNECTED
+} app_state_t;
+
