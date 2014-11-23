@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo $*
+#echo 'call sip:10221726948@172.20.0.101' | linphonec
+
+if [ $(($3 & 8)) -ne "0" ]; then
+    #(echo 'call sip:10212673269@172.20.0.101' | linphonec) &
+    #(echo 'call sip:10221726948@172.20.0.101' | linphonec) &
+    paplay -d alsa_output.pci-0000_00_1b.0.analog-stereo dundundun.wav
+fi
+
