@@ -16,14 +16,15 @@ req = socket.inet_pton(socket.AF_INET, ai[4][0]) + struct.pack('=I', socket.INAD
 s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, req)
 s.settimeout(0.5)
 
-port = serial.Serial()
-port.baudrate = 9600
-port.port = "/dev/rfcomm0"
-port.parity = "N"
-port.stopbits = 1
-port.xonxoff = 0
-port.timeout = 3
-port.open()
+port = serial.Serial(
+        port = "/dev/rfcomm0",
+        baudrate = 9600,
+        parity = "N",
+        stopbits = 1,
+        xonxoff = 0,
+        timeout = 3,
+        interCharTimeout = 0.5 
+    )
 
 port.flushInput()
 port.flushOutput()
@@ -54,12 +55,16 @@ def send(b):
     s = array.array('B', b).tostring()
     for c in s:
         port.write(c)
-        e = port.read(1)
-        if e < 0:
-            raise Exception("oops")
+        print('>>> %x' % ord(c))
+        while True:
+            e = port.read(1)
+            if e < 0 or e == '':
+                raise Exception("oops %d, %s" % (len(e), e))
 
-        if c != e:
-            print "oops"
+            if c == e:
+                break
+
+            print "echo missmatch: %x != %x" % (ord(c), ord(e))
 
 send(diff([0xf for i in indexes]))
 

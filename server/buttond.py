@@ -14,14 +14,15 @@ sock = socket.socket(ai[0], socket.SOCK_DGRAM)
 ttl_bin = struct.pack('@i', TTL)
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl_bin)
 
-port = serial.Serial()
-port.baudrate = 9600
-port.port = "/dev/rfcomm1"
-port.parity = "N"
-port.stopbits = 1
-port.xonxoff = 0
-port.timeout = 3
-port.open()
+port = serial.Serial(
+        port = "/dev/rfcomm1",
+        baudrate = 9600,
+        parity = "N",
+        stopbits = 1,
+        xonxoff = 0,
+        timeout = 1,
+        interCharTimeout = 0.5 
+    )
 
 port.flushInput()
 port.flushOutput()
@@ -29,12 +30,17 @@ time.sleep(5)
 port.flushInput()
 port.flushOutput()
 
+
 def send_at_command(command):
+    print('>>> %s' % command)
     port.write(command+"\r")
 
 def read_command_response():
-    print(port.read(100).decode('ascii').strip())
+    print(port.read(10).decode('ascii').strip())
     print("\n")
+
+#read_command_response()
+
 
 def debounce(x, y):
     print ">>> %d -> %d\n" % (x, y)

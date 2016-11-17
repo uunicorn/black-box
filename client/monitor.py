@@ -61,11 +61,18 @@ class PipelineBamboo(bamboo.Bamboo):
         else:
             s.send(s.digit(0, " ", False) + s.digit(1, " ", False))
 
+        if (leds & 0x2) and (not (l & 2)):
+            if l & 1:
+                os.system("./red &")
+
+            if l & 4:
+                os.system("./green &")
+
         if leds != l:
             leds = l
             leds_update()
 
-pipeline = PipelineBamboo("SOE-PIPELINE")
+pipeline = PipelineBamboo("PRB-NIGHTLY")
 pipeline.start()
 
 class NightlyBamboo(bamboo.Bamboo):
@@ -86,8 +93,8 @@ class NightlyBamboo(bamboo.Bamboo):
             r = nr
             leds_update()
 
-nightly = NightlyBamboo("SOE-NIGHTLY")
-nightly.start()
+#nightly = NightlyBamboo("SOE-NIGHTLY")
+#nightly.start()
 
 class MyPio(pio.Pio):
     def debounce(self, x, y):
@@ -96,10 +103,10 @@ class MyPio(pio.Pio):
         if x & 0x8 and not y & 0x8:
             l = not l
             leds_update()
-            os.system("./button %d %d %d %d" % (l, r, x, y))
+            os.system("./button %d %d %d %d &" % (l, r, x, y))
 
-        if x & 0x2 and not y & 0x2:
-            nightly.trigger()
+#        if x & 0x2 and not y & 0x2:
+#            nightly.trigger()
 
 
 p=MyPio()

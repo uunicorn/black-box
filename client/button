@@ -6,6 +6,8 @@ echo $*
 if [ $(($3 & 8)) -ne "0" ]; then
     #(echo 'call sip:10212673269@172.20.0.101' | linphonec) &
     #(echo 'call sip:10221726948@172.20.0.101' | linphonec) &
-    paplay -d alsa_output.pci-0000_00_1b.0.analog-stereo dundundun.wav
+    #paplay -d alsa_output.pci-0000_00_1b.0.analog-stereo hohoho.ogg
+    #paplay -d alsa_output.pci-0000_00_1b.0.analog-stereo Anas_platyrhynchos_-_Mallard_-_XC62258.ogg
+    paplay -d alsa_output.pci-0000_00_1b.0.analog-stereo desk_bell.wav
 fi
 
